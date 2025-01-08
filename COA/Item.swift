@@ -1,18 +1,11 @@
-//
-//  Item.swift
-//  COA
-//
-//  Created by h2025002 on 2025/1/1.
-//
-
 import Foundation
+import SwiftUI
 import SwiftData
 
 @Model
-final class Item {
-    var timestamp: Date
-    
-    init(timestamp: Date) {
-        self.timestamp = timestamp
-    }
+class Item {
+    var name: String
+    init(name: String) {
+            self.name = name
+        }
 }
