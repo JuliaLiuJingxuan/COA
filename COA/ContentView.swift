@@ -2,6 +2,8 @@ import SwiftUI
 import SwiftData
 
 struct HomeView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var items: [Item]
     var body: some View {
         VStack {
             ZStack {
@@ -26,10 +28,30 @@ struct HomeView: View {
                 }
             }
             .frame(width: 390, height: 76)
+            
             ScrollView {
-                // Item data
+                VStack(spacing: 5){
+                    ForEach(items) { item in
+                        ZStack {
+                            self.item
+                            Text(item.name)
+                        }
+                    }.padding()
+                }
             }
         }
+    }
+    private var item: some View {
+        Rectangle()
+          .foregroundColor(.clear)
+          .frame(width: 300, height: 125)
+          .background(Color(red: 0.98, green: 0.98, blue: 0.98))
+          .cornerRadius(16)
+          .overlay(
+            RoundedRectangle(cornerRadius: 16)
+              .inset(by: 0.5)
+              .stroke(Color(red: 0.09, green: 0.09, blue: 0.09), lineWidth: 1)
+          )
     }
 }
 
@@ -37,6 +59,8 @@ struct AddView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     @State private var newName: String = ""
+    @State private var newProperty: String = ""
+    @State private var newValue: String = ""
     var body: some View {
         VStack {
             Text("Create New Item")
@@ -44,17 +68,45 @@ struct AddView: View {
                 .foregroundColor(.black)
                 .frame(width: 192, height: 31, alignment: .topLeading)
             Spacer()
-            TextField("Name of new Item...", text: $newName)
+            TextField("Name of new item...", text: $newName)
+                .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
+                .padding()
+            TextField("Property...", text: $newProperty)
+                .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
+                .padding()
+            TextField("Value...", text: $newValue)
                 .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
                 .padding()
             Button("Add") {
                 withAnimation {
                     let newItem = Item(name: newName)
                     modelContext.insert(newItem)
+                    newName = ""
                 }
             }
-            List(items) {
-                Text($0.name)
+//            List(items) {
+//                Text($0.name)
+//            }
+            List{
+                ForEach(items) { item in
+                    HStack {
+                        Text(item.name)
+                        Spacer()
+                        Button(action: {
+                            withAnimation {
+                                modelContext.delete(item)
+                                    do {
+                                        try modelContext.save()
+                                    } catch {
+                                        print("Failed to delete item: \(error)")
+                                    }
+                                }
+                        }) {
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                        }
+                    }
+                }
             }
         }
     }
