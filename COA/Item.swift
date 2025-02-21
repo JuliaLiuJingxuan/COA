@@ -4,16 +4,16 @@ import SwiftData
 
 @Model
 class Item {
-//    var name: String
-//    var properties: [String]
-//    var values: [String]
-//    init(name: String, properties: [String] = [], values: [String] = []) {
-//            self.name = name
-//            self.properties = properties
-//            self.values = properties
-//        }
     var name: String
-    init(name: String) {
-                self.name = name
-        }
+    var properties: String
+//    var value: String
+//    init(name: String, properties: String, value: String) {
+//        self.name = name
+//        self.properties = properties
+//        self.value = value
+//    }
+    init(name: String, properties: String) {
+        self.name = name
+        self.properties = properties
+    }
 }

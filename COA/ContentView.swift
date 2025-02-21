@@ -33,25 +33,26 @@ struct HomeView: View {
                 VStack(spacing: 5){
                     ForEach(items) { item in
                         ZStack {
-                            self.item
-                            Text(item.name)
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 300, height: 125)
+                                .background(Color(red: 0.98, green: 0.98, blue: 0.98))
+                                .cornerRadius(16)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .inset(by: 0.5)
+                                        .stroke(Color(red: 0.09, green: 0.09, blue: 0.09), lineWidth: 1)
+                                )
+                            VStack {
+                                Text(item.name)
+                                Text(item.properties)
+//                                Text(item.value)
+                            }
                         }
                     }.padding()
                 }
             }
         }
-    }
-    private var item: some View {
-        Rectangle()
-          .foregroundColor(.clear)
-          .frame(width: 300, height: 125)
-          .background(Color(red: 0.98, green: 0.98, blue: 0.98))
-          .cornerRadius(16)
-          .overlay(
-            RoundedRectangle(cornerRadius: 16)
-              .inset(by: 0.5)
-              .stroke(Color(red: 0.09, green: 0.09, blue: 0.09), lineWidth: 1)
-          )
     }
 }
 
@@ -60,9 +61,10 @@ struct AddView: View {
     @Query private var items: [Item]
     @State private var newName: String = ""
     @State private var newProperty: String = ""
-    @State private var newValue: String = ""
+//    @State private var newValue: String = ""
     var body: some View {
         VStack {
+            Spacer()
             Text("Create New Item")
                 .font(Font.custom("Inter", size: 24))
                 .foregroundColor(.black)
@@ -74,19 +76,17 @@ struct AddView: View {
             TextField("Property...", text: $newProperty)
                 .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
                 .padding()
-            TextField("Value...", text: $newValue)
-                .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
-                .padding()
+//            TextField("Value...", text: $newValue)
+//                .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
+//                .padding()
             Button("Add") {
-                withAnimation {
-                    let newItem = Item(name: newName)
-                    modelContext.insert(newItem)
-                    newName = ""
-                }
+//                let newItem = Item(name: newName, properties: newProperty, value: newValue)
+                let newItem = Item(name: newName, properties: newProperty)
+                modelContext.insert(newItem)
+                newName = ""
+                newProperty = ""
+//                newValue = ""
             }
-//            List(items) {
-//                Text($0.name)
-//            }
             List{
                 ForEach(items) { item in
                     HStack {
