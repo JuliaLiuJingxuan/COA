@@ -45,8 +45,8 @@ struct HomeView: View {
                                 )
                             VStack {
                                 Text(item.name)
-                                Text(item.properties)
-//                                Text(item.value)
+                                Text(item.properties ?? "")
+                                Text(item.values ?? "")
                             }
                         }
                     }.padding()
@@ -61,7 +61,7 @@ struct AddView: View {
     @Query private var items: [Item]
     @State private var newName: String = ""
     @State private var newProperty: String = ""
-//    @State private var newValue: String = ""
+    @State private var newValue: String = ""
     var body: some View {
         VStack {
             Spacer()
@@ -76,12 +76,11 @@ struct AddView: View {
             TextField("Property...", text: $newProperty)
                 .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
                 .padding()
-//            TextField("Value...", text: $newValue)
-//                .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
-//                .padding()
+            TextField("Value...", text: $newValue)
+                .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
+                .padding()
             Button("Add") {
-//                let newItem = Item(name: newName, properties: newProperty, value: newValue)
-                let newItem = Item(name: newName, properties: newProperty)
+                let newItem = Item(name: newName, properties: newProperty.isEmpty ? nil : newProperty, values: newValue.isEmpty ? nil : newProperty)
                 modelContext.insert(newItem)
                 newName = ""
                 newProperty = ""
