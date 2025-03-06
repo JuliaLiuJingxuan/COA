@@ -86,23 +86,25 @@ struct AddView: View {
                 newProperty = ""
 //                newValue = ""
             }
-            List{
+            List {
                 ForEach(items) { item in
-                    HStack {
-                        Text(item.name)
-                        Spacer()
-                        Button(action: {
-                            withAnimation {
-                                modelContext.delete(item)
+                    VStack {
+                        HStack {
+                            Text(item.name)
+                            Spacer()
+                            Button(action: {
+                                withAnimation {
+                                    modelContext.delete(item)
                                     do {
                                         try modelContext.save()
                                     } catch {
                                         print("Failed to delete item: \(error)")
                                     }
                                 }
-                        }) {
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                            }  
                         }
                     }
                 }
