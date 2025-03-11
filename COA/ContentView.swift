@@ -55,6 +55,13 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     @State private var searchText: String = ""
+    var filteredItems: [Item] {
+        if searchText.isEmpty {
+            return items
+        } else {
+            return items.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
     var body: some View {
         VStack {
             ZStack {
@@ -90,7 +97,7 @@ struct HomeView: View {
             
             ScrollView {
                 VStack(spacing: 5) {
-                    ForEach(items) { item in
+                    ForEach(filteredItems) { item in
                         NavigationLink(destination: EditView(item: item)) {
                             ZStack {
                                 Rectangle()
