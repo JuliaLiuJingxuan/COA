@@ -4,45 +4,36 @@ import SwiftData
 struct EditView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    
     @State private var editedName: String
     @State private var editedProperty: String
     @State private var editedValue: String
-    
     var item: Item
-    
     init(item: Item) {
         self.item = item
         _editedName = State(initialValue: item.name)
         _editedProperty = State(initialValue: item.properties ?? "")
         _editedValue = State(initialValue: item.values ?? "")
     }
-    
     var body: some View {
         VStack {
             TextField("Name", text: $editedName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-            
             TextField("Property", text: $editedProperty)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-            
             TextField("Value", text: $editedValue)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-            
             Button("Save") {
                 item.name = editedName
                 item.properties = editedProperty.isEmpty ? nil : editedProperty
                 item.values = editedValue.isEmpty ? nil : editedValue
-                
                 do {
                     try modelContext.save()
                 } catch {
                     print("Failed to save item: \(error)")
                 }
-                
                 dismiss()
             }
             .padding()
@@ -77,7 +68,7 @@ struct HomeView: View {
                             .frame(width: 250, height: 56)
                             .background(.white)
                             .cornerRadius(16)
-                        HStack{
+                        HStack {
                             Image(systemName: "magnifyingglass")
                                 .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
                             TextField("Search", text: $searchText)
@@ -94,7 +85,6 @@ struct HomeView: View {
                 }
             }
             .frame(width: 390, height: 76)
-            
             ScrollView {
                 VStack(spacing: 5) {
                     ForEach(filteredItems) { item in
@@ -154,7 +144,7 @@ struct AddView: View {
                 modelContext.insert(newItem)
                 newName = ""
                 newProperty = ""
-//                newValue = ""
+                newValue = ""
             }
             List {
                 ForEach(items) { item in
@@ -199,7 +189,7 @@ struct ProfileView: View {
                 .frame(width: 200, height: 200)
             Text("Name")
         }
-            .padding()
+        .padding()
     }
 }
 
