@@ -7,10 +7,12 @@ class Item {
     @Attribute var name: String
     @Attribute var properties: String?
     @Attribute var values: String?
+    var imageData: Data?
 
-    init(name: String, properties: String?, values: String?) {
+    init(name: String, properties: String?, values: String?, imageData: Data? = nil) {
         self.name = name
         self.properties = properties
-        self.values = properties
+        self.values = values
+        self.imageData = imageData
     }
 }
