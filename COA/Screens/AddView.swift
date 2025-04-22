@@ -8,8 +8,10 @@ struct AddView: View {
     @State private var newName: String = ""
     @State private var newProperty: String = ""
     @State private var newValue: String = ""
+    @State private var newPrice: String = ""
     @State private var selectedImage: UIImage?
     @State private var showImagePicker = false
+
     var body: some View {
         VStack {
             Spacer()
@@ -27,6 +29,12 @@ struct AddView: View {
             TextField("Value...", text: $newValue)
                 .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
                 .padding()
+            // 填的不是数字怎么办
+            TextField("Price...", text: $newPrice)
+                .foregroundColor(Color(red: 0.6, green: 0.6, blue: 0.6))
+                .keyboardType(.decimalPad)
+            .padding()
+            
             if let image = selectedImage {
                 Image(uiImage: image)
                     .resizable()
@@ -43,11 +51,18 @@ struct AddView: View {
             }
             .padding()
             Button("Add") {
-                let newItem = Item(name: newName, properties: newProperty.isEmpty ? nil : newProperty, values: newValue.isEmpty ? nil : newValue, imageData: selectedImage?.jpegData(compressionQuality: 0.8))
+                let priceValue = newPrice.isEmpty ? nil : Double(newPrice)
+                let newItem = Item(
+                    name: newName,
+                    properties: newProperty.isEmpty ? nil : newProperty,
+                    values: newValue.isEmpty ? nil : newValue,
+                    price: priceValue,
+                    imageData: selectedImage?.jpegData(compressionQuality: 0.8))
                 modelContext.insert(newItem)
                 newName = ""
                 newProperty = ""
                 newValue = ""
+                newPrice = ""
                 selectedImage = nil
             }
             List {

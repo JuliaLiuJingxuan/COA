@@ -47,11 +47,15 @@ struct HomeView: View {
                 }
             }
             .frame(width: 390, height: 76)
+            // item排序
             ScrollView {
                 VStack(spacing: 10) {
                     ForEach(filteredItems) { item in
                         NavigationLink(destination: EditView(item: item)) {
                             HStack(alignment: .center, spacing: 15) {
+                                //图片尺寸
+                                //不要背景那个框
+                                //不要图片logo
                                 if let imageData = item.imageData, let uiImage = UIImage(data: imageData) {
                                     Image(uiImage: uiImage)
                                         .resizable()
@@ -72,12 +76,22 @@ struct HomeView: View {
                                     Text(item.name)
                                         .font(.headline)
                                         .foregroundColor(.primary)
-                                    
-                                    if let property = item.properties {
-                                        Text(property)
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(1)
+                                    HStack() {
+                                        if let property = item.properties, !property.isEmpty {
+                                            Text(property)
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        if let value = item.values, !value.isEmpty {
+                                            Text(value)
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
+                                        }
+                                        if let price = item.price {
+                                            Text("$\(price, specifier: "%.2f")")
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
+                                        }
                                     }
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)

@@ -12,8 +12,8 @@ struct ContentView: View {
                 Tab("Add", systemImage: "plus.circle.fill") {
                     AddView()
                 }
-                Tab("Add", systemImage: "chart.line.uptrend.xyaxis.circle.fill") {
-                    StatisticView()
+                Tab("Statistics", systemImage: "chart.line.uptrend.xyaxis.circle.fill") {
+                    StatisticsView()
                 }
                 Tab("Profile", systemImage: "person.crop.circle.fill") {
                     ProfileView()

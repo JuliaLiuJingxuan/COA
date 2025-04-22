@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 import PhotosUI
-
+// Editiew 选图片会回到homepage
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
     
