@@ -1,18 +1,10 @@
-//
-//  StatisticView.swift
-//  COA
-//
-//  Created by h2025002 on 2025/4/22.
-//
-
 import SwiftUI
+import SwiftData
+import PhotosUI
 
 struct StatisticView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Statistic")
+            .padding()
     }
-}
-
-#Preview {
-    StatisticView()
 }
