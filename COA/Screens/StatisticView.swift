@@ -2,9 +2,7 @@ import SwiftUI
 import SwiftData
 import PhotosUI
 
-struct StatisticView: View {
+struct StatisticsView: View {
     var body: some View {
-        Text("Statistic")
-            .padding()
     }
 }
